@@ -1,0 +1,91 @@
+<!--Refers to the scripts under the public folder-->
+
+<% layout('layouts/boilerplate')%>
+    <div class="container d-flex justify-content-center align-items-center mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+                <div class="card shadow">
+                    <img src="https://images.unsplash.com/photo-1641508615629-d3781e255722?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1205&q=80"
+                        alt="" class="card-img-top" />
+                    <div class="card-body">
+                        <h5 class="card-title">Register</h5>
+                        <form action="/register" method="POST" class="validated-form" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="username">Email</label>
+                                <input class="form-control" type="email" id="username" name="username" required
+                                    autofocus>
+                                <div class="invalid-feedback">
+                                    Please enter an email address.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Password</label>
+                                <input class="form-control" type="password" id="password" name="password" minlength="8"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Passwords must have 8 characters and match.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="confpassword">Confirm Password</label>
+                                <input class="form-control" type="password" id="confpassword" name="confpassword"
+                                    minlength="8" required>
+                                <div class="invalid-feedback">
+                                    Passwords must have 8 characters and match.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="knownas">Known As</label>
+                                <input class="form-control" type="string" id="knownas" name="knownas" required>
+                                <div class="invalid-feedback">
+                                    Please enter a 'known as' value.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-success btn-block">Register</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom validation function for this form, tch.
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.validated-form')
+
+            // Loop over them and prevent submission
+            Array.from(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.confpassword.value !== form.password.value) {
+                            event.preventDefault()
+                            event.stopPropagation()
+
+                            form.password.value = '';
+                            var element = document.getElementById("password");
+                            element.classList.add("is-invalid");
+                            form.confpassword.value = '';
+                            var conf = document.getElementById("confpassword");
+                            conf.classList.add("is-invalid");
+                        } else {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        }
+                    }, false)
+                })
+        })()
+    </script>
+    <!--
+    <script src="/javascripts/validateForms.js"></script>
+    -->

@@ -1,0 +1,68 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Edit Pub</h1>
+        <!--centered, responsive-->
+        <div class="col-md-6 offset-md-3">
+            <!--Edit form, so tell it to use PUT-->
+            <form action="/pubs/<%=pub._id%>?_method=PUT" method="POST" novalidate class="validated-form"
+                enctype="multipart/form-data">
+                <!--layout similar to new-->
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="pub[title]" value="<%=pub.title %>"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="pub[location]"
+                        value="<%=pub.location %>" required>
+                </div>
+                <div class="mb-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="garden" name="pub[garden]"
+                            <%if(pub.garden==='on' ) {%>
+                        checked
+                        <% } %>>
+                            <label class="custom-control-label" for="garden">Has a Garden?</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="food" name="pub[food]"
+                            <%if(pub.food==='on' ) { %>
+                        checked
+                        <% } %>>
+                            <label class="custom-control-label" for="food">Food Served?</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="pub[description]"
+                        required><%= pub.description%></textarea>
+                </div>
+                <div class="mb-3">
+                    <div class="form-file">
+                        <input type="file" class="form-file-input" id="image" name="image" multiple>
+                        <label class="form-file-label" for="image">
+                            <span class="form-file-text">Add more image(s)...</span>
+                            <span class="form-file-button">Browse</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <% pub.images.forEach(function(img, i) { %>
+                        <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                        </div>
+                        <label for="image-<%=i%>">Delete?</label>
+                        <% })%>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-info">Update Pub</button>
+                </div>
+            </form>
+            <a href="/pubs/<%= pub._id%>">Back To Pub</a>
+
+        </div>
+    </div>
